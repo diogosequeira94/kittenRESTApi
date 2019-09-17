@@ -47,7 +47,7 @@ public class KittenAdapter extends RecyclerView.Adapter<KittenAdapter.KittenView
         //Setting the views properties to the cards
 
         holder.kittenName.setText(kittenName);
-        holder.kittenLikes.setText("Likes: " + kittenLikes);
+        holder.kittenLikes.setText("" + kittenLikes);
         Picasso.with(context).load(imageUrl).fit().centerInside().into(holder.imageView);
 
     }

@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         parseJSON();
 
 
+
     }
 
 
@@ -68,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
 
                             }
 
+                            kittenAdapter = new KittenAdapter(getApplicationContext(), kittenList);
+                            recyclerView.setAdapter(kittenAdapter);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -79,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
+
+        requestQueue.add(request);
 
     }
 }
