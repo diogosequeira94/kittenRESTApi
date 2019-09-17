@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class KittenAdapter extends RecyclerView.Adapter<KittenAdapter.KittenViewHolder> {
@@ -35,6 +37,18 @@ public class KittenAdapter extends RecyclerView.Adapter<KittenAdapter.KittenView
     public void onBindViewHolder(@NonNull KittenViewHolder holder, int position) {
 
         // Current item of our ArrayList
+
+        KittenItem currentKitten = kittenList.get(position);
+
+        String imageUrl = currentKitten.getImageUrl();
+        String kittenName = currentKitten.getKittenName();
+        int kittenLikes = currentKitten.getKittenLikes();
+
+        //Setting the views properties to the cards
+
+        holder.kittenName.setText(kittenName);
+        holder.kittenLikes.setText("Likes: " + kittenLikes);
+        Picasso.with(context).load(imageUrl).fit().centerInside().into(holder.imageView);
 
     }
 
