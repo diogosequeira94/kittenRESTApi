@@ -1,23 +1,28 @@
 package com.example.recyclerviewjson;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
 public class KittenAdapter extends RecyclerView.Adapter<KittenAdapter.KittenViewHolder> {
 
     private Context context;
     private ArrayList<KittenItem> kittenList;
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
+    }
 
     public KittenAdapter(Context context, ArrayList<KittenItem> kittenList){
         this.context = context;
@@ -69,6 +74,18 @@ public class KittenAdapter extends RecyclerView.Adapter<KittenAdapter.KittenView
             imageView = itemView.findViewById(R.id.image_view);
             kittenLikes = itemView.findViewById(R.id.text_likes);
             kittenName = itemView.findViewById(R.id.text_kitten_name);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
 
         }
     }

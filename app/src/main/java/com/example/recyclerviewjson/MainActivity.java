@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.android.volley.Request;
@@ -19,7 +20,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements KittenAdapter.OnItemClickListener {
+
+    //Constants for intent
+    public static final String EXTRA_URL = "imageUrl";
+    public static final String EXTRA_NAME = "kittenName";
+    public static final String EXTRA_LIKES = "likeCount";
 
     private RecyclerView recyclerView;
     private KittenAdapter kittenAdapter;
@@ -71,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
                             kittenAdapter = new KittenAdapter(getApplicationContext(), kittenList);
                             recyclerView.setAdapter(kittenAdapter);
+                            kittenAdapter.setOnItemClickListener(MainActivity.this);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -86,5 +93,17 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue.add(request);
 
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent detailIntent = new Intent(this, DetailActivity.class);
+        KittenItem clickedItem = kittenList.get(position);
+
+        detailIntent.putExtra(EXTRA_URL, clickedItem.getImageUrl());
+        detailIntent.putExtra(EXTRA_NAME, clickedItem.getKittenName());
+        detailIntent.putExtra(EXTRA_LIKES, clickedItem.getKittenLikes());
+
+        startActivity(detailIntent);
     }
 }
